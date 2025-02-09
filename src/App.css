@@ -1,0 +1,11 @@
+.body {
+  margin: 0 auto;
+}
+.navbar {
+  background: linear-gradient(230deg, rgb(159, 219, 17), rgb(235, 138, 154));
+}
+.title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+}
