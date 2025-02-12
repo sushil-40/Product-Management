@@ -19,7 +19,6 @@ export const Form = ({ addProduct }) => {
       action=""
       onSubmit={handleOnSubmit}
     >
-      {" "}
       <div className="input-group mt-5 mb-3 container">
         <input
           onChange={handleOnChange}

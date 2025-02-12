@@ -3,6 +3,8 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Form } from "./components/Form";
 import { ProductTable } from "./components/ProductTable";
+import { ChallengeBlog } from "./components/ChallengeBlog";
+import { ChallengeECommerceCart } from "./components/ChallengeECommerceCart";
 
 function App() {
   const [listOfProduct, setListOfProduct] = useState([]);
@@ -15,6 +17,9 @@ function App() {
       <Navbar />
       <Form addProduct={addProduct} />
       <ProductTable products={listOfProduct} />
+
+      {/* <ChallengeBlog /> */}
+      {/* <ChallengeECommerceCart /> */}
     </div>
   );
 }

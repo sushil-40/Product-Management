@@ -2,6 +2,7 @@
 import React from "react";
 
 export const ProductTable = ({ products }) => {
+  const handleOnDelete = () => {};
   return (
     <div>
       <h2 className="text-center" style={{ color: "GrayText" }}>
@@ -16,7 +17,7 @@ export const ProductTable = ({ products }) => {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col">id</th>
               <th scope="col">Item</th>
             </tr>
           </thead>
@@ -32,6 +33,15 @@ export const ProductTable = ({ products }) => {
           </tbody>
         </table>
       )}
+      <div className="row my-5 d-grid">
+        <button
+          onClick={handleOnDelete}
+          type="button"
+          className="btn btn-danger"
+        >
+          Delete Product(s)
+        </button>
+      </div>
     </div>
   );
 };

@@ -9,3 +9,20 @@
   font-size: 1.5rem;
   color: white;
 }
+
+/* Product Cart Challenge */
+.product-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 20px;
+  background: #000;
+}
+.product-item {
+  background-color: steelblue;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
