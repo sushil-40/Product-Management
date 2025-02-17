@@ -6,7 +6,6 @@ export const Form = ({ addProduct }) => {
   const handleOnChange = (e) => {
     setInputFormData(e.target.value);
   };
-
   const handleOnSubmit = (e) => {
     e.preventDefault();
     addProduct(inputFormData);
@@ -15,8 +14,7 @@ export const Form = ({ addProduct }) => {
   return (
     <form
       className="input-product-form"
-      method=""
-      action=""
+      method="post"
       onSubmit={handleOnSubmit}
     >
       <div className="input-group mt-5 mb-3 container">
@@ -28,6 +26,7 @@ export const Form = ({ addProduct }) => {
           aria-label="Product name"
           aria-describedby="button-addon2"
           name="product"
+          id="product"
         />
         <button
           className="btn btn-info rounded"
