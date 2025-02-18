@@ -32,3 +32,16 @@ export const postProduct = async (productName) => {
     };
   }
 };
+
+export const fetchAllProducts = async () => {
+  try {
+    const response = await axios.get(apiEP);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+};

@@ -17,7 +17,7 @@ export const ProductTable = ({ products }) => {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th scope="col">id</th>
+              <th scope="col">_id</th>
               <th scope="col">Item</th>
             </tr>
           </thead>
@@ -25,8 +25,8 @@ export const ProductTable = ({ products }) => {
             {products.map((prd, i) => {
               return (
                 <tr key={i}>
-                  <th scope="row">{i + 1}</th>
-                  <td>{prd}</td>
+                  <th scope="row">{prd._id}</th>
+                  <td>{prd.product}</td>
                 </tr>
               );
             })}
