@@ -29,7 +29,18 @@ function App() {
   return (
     <div className="wrapper">
       <Navbar />
-      <div className="alert alert-success">{resp?.message}</div>
+      {resp?.message && (
+        <div
+          className={
+            resp?.status === "success"
+              ? "alert alert-success"
+              : "alert alert-danger"
+          }
+        >
+          {resp?.message}
+        </div>
+      )}
+
       <Form addProduct={addProduct} />
       <ProductTable products={listOfProduct} />
       {/* <ChallengeBlog /> */}
