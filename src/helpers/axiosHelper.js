@@ -23,7 +23,7 @@ export const postProduct = async (productName) => {
     console.log(apiEP);
     const response = await axios.post(apiEP, { product: productName }); //the product is the same name from table
 
-    console.log(response);
+    console.log(response.data, "test rsp data from axiosHelper");
     return response.data; // ✅ Return response
   } catch (error) {
     return {
