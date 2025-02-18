@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Form } from "./components/Form";
@@ -10,8 +10,13 @@ import { fetchAllProducts, postProduct } from "./helpers/axiosHelper";
 function App() {
   const [listOfProduct, setListOfProduct] = useState([]);
   const [resp, setResp] = useState({});
+
+  const shouldFetchRef = useRef(true);
+
   useEffect(() => {
-    getAllProducts();
+    shouldFetchRef.current && getAllProducts();
+
+    shouldFetchRef.current = false;
   }, []);
   const addProduct = async (productName) => {
     // setListOfProduct([...listOfProduct, productObj]);
@@ -25,12 +30,11 @@ function App() {
   const getAllProducts = async () => {
     // call the axiosHelper to get data from the server
     const data = await fetchAllProducts();
-    console.log(data, "all products");
-    console.log(data.results, "just products");
+
     //mount that data to our productList
     data?.status === "success" && setListOfProduct(data.results);
   };
-  console.log(listOfProduct, "app level");
+
   return (
     <div className="wrapper">
       <Navbar />
