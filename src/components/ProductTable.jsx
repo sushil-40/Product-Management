@@ -1,7 +1,21 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 
 export const ProductTable = ({ products }) => {
+  const [displayUpdateForm, setDisplayUpdateForm] = useState(false);
+  const [tempUpdateProduct, setTempUpdateProduct] = useState({});
+  const handleOnUpdate = (prodObj) => {
+    // console.log(prodObj);
+    setDisplayUpdateForm(true);
+    setTempUpdateProduct(prodObj);
+  };
+  const handleOnUpdateItem = () => {
+    // implement logic to handle update of product
+
+    setDisplayUpdateForm(false);
+  };
+  console.log(displayUpdateForm);
+
   const handleOnDelete = () => {};
   return (
     <div>
@@ -9,6 +23,28 @@ export const ProductTable = ({ products }) => {
         Product Table
       </h2>
       <hr />
+
+      <div
+        className={
+          displayUpdateForm ? "update-product text-center" : "display-none"
+        }
+      >
+        <h3 style={{ color: "blue" }}>Edit product detail!</h3>
+
+        <div className="item-update">
+          <input
+            type="text"
+            name="update-product"
+            placeholder={tempUpdateProduct.product}
+          />{" "}
+          <button
+            onClick={handleOnUpdateItem}
+            className="btn btn-primary rounded"
+          >
+            Update Item
+          </button>
+        </div>
+      </div>
       {products.length < 1 ? (
         <p className="text-center" style={{ color: "red" }}>
           No items available to display. Please add some items!
@@ -19,6 +55,7 @@ export const ProductTable = ({ products }) => {
             <tr>
               <th scope="col">_id</th>
               <th scope="col">Item</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -27,6 +64,14 @@ export const ProductTable = ({ products }) => {
                 <tr key={i}>
                   <th scope="row">{prd._id}</th>
                   <td>{prd.product}</td>
+                  <td>
+                    <button
+                      onClick={() => handleOnUpdate(prd)}
+                      className="btn btn-info rounded"
+                    >
+                      Update
+                    </button>
+                  </td>
                 </tr>
               );
             })}
