@@ -5,7 +5,11 @@ import { Form } from "./components/Form";
 import { ProductTable } from "./components/ProductTable";
 // import { ChallengeBlog } from "./components/ChallengeBlog";
 // import { ChallengeECommerceCart } from "./components/ChallengeECommerceCart";
-import { fetchAllProducts, postProduct } from "./helpers/axiosHelper";
+import {
+  fetchAllProducts,
+  postProduct,
+  updateProduct,
+} from "./helpers/axiosHelper";
 
 function App() {
   const [listOfProduct, setListOfProduct] = useState([]);
@@ -34,7 +38,13 @@ function App() {
     //mount that data to our productList
     data?.status === "success" && setListOfProduct(data.results);
   };
-
+  const updateProductItem = async (prodObj) => {
+    const data = await updateProduct(prodObj);
+    setResp(data);
+    if (data?.status === "success") {
+      getAllProducts(); // Refetch the updated product list
+    }
+  };
   return (
     <div className="wrapper">
       <Navbar />
@@ -51,7 +61,10 @@ function App() {
       )}
 
       <Form addProduct={addProduct} />
-      <ProductTable products={listOfProduct} />
+      <ProductTable
+        products={listOfProduct}
+        updateProductItem={updateProductItem}
+      />
       {/* <ChallengeBlog /> */}
       {/* <ChallengeECommerceCart /> */}
     </div>

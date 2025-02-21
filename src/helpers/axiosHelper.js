@@ -45,3 +45,15 @@ export const fetchAllProducts = async () => {
     };
   }
 };
+export const updateProduct = async (prdObj) => {
+  try {
+    const response = await axios.patch(apiEP, prdObj);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+};

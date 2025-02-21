@@ -1,21 +1,45 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
-export const ProductTable = ({ products }) => {
+export const ProductTable = ({ products, updateProductItem }) => {
   const [displayUpdateForm, setDisplayUpdateForm] = useState(false);
   const [tempUpdateProduct, setTempUpdateProduct] = useState({});
-  const handleOnUpdate = (prodObj) => {
+  const [updateItemDetail, setUpdateItemDetail] = useState("");
+  // Create a ref for the input field
+  const inputRef = useRef(null);
+  const updateFormRef = useRef(null);
+  const handleOnShowUpdate = (prodObj) => {
     // console.log(prodObj);
     setDisplayUpdateForm(true);
     setTempUpdateProduct(prodObj);
+    setUpdateItemDetail(prodObj.product);
+
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current?.focus();
+        inputRef.current.select();
+      }
+    }, 100);
+
+    setTimeout(() => {
+      updateFormRef.current?.scrollIntoView(
+        {
+          behavior: "smooth",
+          block: "center",
+        },
+        200
+      );
+    });
   };
   const handleOnUpdateItem = () => {
     // implement logic to handle update of product
-
+    updateProductItem({ ...tempUpdateProduct, product: updateItemDetail });
     setDisplayUpdateForm(false);
   };
   console.log(displayUpdateForm);
-
+  const handleOnUpdateItemChange = (e) => {
+    setUpdateItemDetail(e.target.value);
+  };
   const handleOnDelete = () => {};
   return (
     <div>
@@ -25,6 +49,7 @@ export const ProductTable = ({ products }) => {
       <hr />
 
       <div
+        ref={updateFormRef}
         className={
           displayUpdateForm ? "update-product text-center" : "display-none"
         }
@@ -33,6 +58,8 @@ export const ProductTable = ({ products }) => {
 
         <div className="item-update">
           <input
+            ref={inputRef}
+            onChange={handleOnUpdateItemChange}
             type="text"
             name="update-product"
             placeholder={tempUpdateProduct.product}
@@ -66,7 +93,7 @@ export const ProductTable = ({ products }) => {
                   <td>{prd.product}</td>
                   <td>
                     <button
-                      onClick={() => handleOnUpdate(prd)}
+                      onClick={() => handleOnShowUpdate(prd)}
                       className="btn btn-info rounded"
                     >
                       Update
