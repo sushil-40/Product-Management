@@ -3,16 +3,17 @@ import React, { useRef, useState } from "react";
 
 export const ProductTable = ({ products, updateProductItem }) => {
   const [displayUpdateForm, setDisplayUpdateForm] = useState(false);
-  const [tempUpdateProduct, setTempUpdateProduct] = useState({});
-  const [updateItemDetail, setUpdateItemDetail] = useState("");
+
+  const [updatedItemDetail, setUpdatedItemDetail] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
   // Create a ref for the input field
   const inputRef = useRef(null);
   const updateFormRef = useRef(null);
   const handleOnShowUpdate = (prodObj) => {
-    // console.log(prodObj);
     setDisplayUpdateForm(true);
-    setTempUpdateProduct(prodObj);
-    setUpdateItemDetail(prodObj.product);
+    setSelectedProduct(prodObj);
+
+    setUpdatedItemDetail(prodObj.product);
 
     setTimeout(() => {
       if (inputRef.current) {
@@ -31,14 +32,18 @@ export const ProductTable = ({ products, updateProductItem }) => {
       );
     });
   };
-  const handleOnUpdateItem = () => {
-    // implement logic to handle update of product
-    updateProductItem({ ...tempUpdateProduct, product: updateItemDetail });
-    setDisplayUpdateForm(false);
-  };
+
   console.log(displayUpdateForm);
   const handleOnUpdateItemChange = (e) => {
-    setUpdateItemDetail(e.target.value);
+    setUpdatedItemDetail(e.target.value);
+  };
+  const handleOnUpdateItem = () => {
+    // implement logic to handle update of product
+    if (!selectedProduct) return;
+    updateProductItem(selectedProduct._id, { product: updatedItemDetail });
+
+    setDisplayUpdateForm(false);
+    setSelectedProduct(null);
   };
   const handleOnDelete = () => {};
   return (
@@ -47,31 +52,33 @@ export const ProductTable = ({ products, updateProductItem }) => {
         Product Table
       </h2>
       <hr />
+      {displayUpdateForm && (
+        <div
+          ref={updateFormRef}
+          className={
+            displayUpdateForm ? "update-product text-center" : "display-none"
+          }
+        >
+          <h3 style={{ color: "blue" }}>Edit product detail!</h3>
 
-      <div
-        ref={updateFormRef}
-        className={
-          displayUpdateForm ? "update-product text-center" : "display-none"
-        }
-      >
-        <h3 style={{ color: "blue" }}>Edit product detail!</h3>
-
-        <div className="item-update">
-          <input
-            ref={inputRef}
-            onChange={handleOnUpdateItemChange}
-            type="text"
-            name="update-product"
-            placeholder={tempUpdateProduct.product}
-          />{" "}
-          <button
-            onClick={handleOnUpdateItem}
-            className="btn btn-primary rounded"
-          >
-            Update Item
-          </button>
+          <div className="item-update">
+            <input
+              ref={inputRef}
+              onChange={handleOnUpdateItemChange}
+              type="text"
+              name="update-product"
+              placeholder={selectedProduct.product}
+            />{" "}
+            <button
+              onClick={handleOnUpdateItem}
+              className="btn btn-primary rounded"
+            >
+              Update Item
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+
       {products.length < 1 ? (
         <p className="text-center" style={{ color: "red" }}>
           No items available to display. Please add some items!

@@ -38,8 +38,8 @@ function App() {
     //mount that data to our productList
     data?.status === "success" && setListOfProduct(data.results);
   };
-  const updateProductItem = async (prodObj) => {
-    const data = await updateProduct(prodObj);
+  const updateProductItem = async (_id, updatedProductItemObj) => {
+    const data = await updateProduct(_id, updatedProductItemObj);
     setResp(data);
     if (data?.status === "success") {
       getAllProducts(); // Refetch the updated product list

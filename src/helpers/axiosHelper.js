@@ -23,7 +23,6 @@ export const postProduct = async (productName) => {
     console.log(apiEP);
     const response = await axios.post(apiEP, { product: productName }); //the product is the same name from table
 
-    console.log(response.data, "test rsp data from axiosHelper");
     return response.data; // ✅ Return response
   } catch (error) {
     return {
@@ -36,7 +35,7 @@ export const postProduct = async (productName) => {
 export const fetchAllProducts = async () => {
   try {
     const response = await axios.get(apiEP);
-    console.log(response);
+
     return response.data;
   } catch (error) {
     return {
@@ -45,10 +44,13 @@ export const fetchAllProducts = async () => {
     };
   }
 };
-export const updateProduct = async (prdObj) => {
+export const updateProduct = async (_id, updatedProductItemObj) => {
   try {
-    const response = await axios.patch(apiEP, prdObj);
-    console.log(response);
+    const response = await axios.patch(apiEP, {
+      _id,
+      ...updatedProductItemObj,
+    });
+
     return response.data;
   } catch (error) {
     return {
