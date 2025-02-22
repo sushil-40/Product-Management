@@ -33,14 +33,13 @@ export const ProductTable = ({ products, updateProductItem }) => {
     });
   };
 
-  console.log(displayUpdateForm);
   const handleOnUpdateItemChange = (e) => {
     setUpdatedItemDetail(e.target.value);
   };
   const handleOnUpdateItem = () => {
     // implement logic to handle update of product
     if (!selectedProduct) return;
-    updateProductItem(selectedProduct._id, { product: updatedItemDetail });
+    updateProductItem(selectedProduct._id, updatedItemDetail);
 
     setDisplayUpdateForm(false);
     setSelectedProduct(null);

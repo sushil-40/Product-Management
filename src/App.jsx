@@ -30,6 +30,9 @@ function App() {
     const response = await postProduct(productName);
     console.log((response, "test res from front end"));
     setResp(response);
+    if (response?.status === "success") {
+      getAllProducts(); // ✅ Refresh updated product list
+    }
   };
   const getAllProducts = async () => {
     // call the axiosHelper to get data from the server
@@ -38,13 +41,15 @@ function App() {
     //mount that data to our productList
     data?.status === "success" && setListOfProduct(data.results);
   };
-  const updateProductItem = async (_id, updatedProductItemObj) => {
-    const data = await updateProduct(_id, updatedProductItemObj);
+  const updateProductItem = async (_id, product) => {
+    const data = await updateProduct({ _id, product }); // ✅ Correct format
     setResp(data);
+
     if (data?.status === "success") {
-      getAllProducts(); // Refetch the updated product list
+      getAllProducts(); // ✅ Refresh updated product list
     }
   };
+
   return (
     <div className="wrapper">
       <Navbar />
