@@ -6,6 +6,8 @@ export const ProductTable = ({ products, updateProductItem }) => {
 
   const [updatedItemDetail, setUpdatedItemDetail] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [toDelete, setToDelete] = useState([]);
+
   // Create a ref for the input field
   const inputRef = useRef(null);
   const updateFormRef = useRef(null);
@@ -45,6 +47,32 @@ export const ProductTable = ({ products, updateProductItem }) => {
     setSelectedProduct(null);
   };
   const handleOnDelete = () => {};
+
+  const handleOnSelect = (e) => {
+    const { checked, value } = e.target;
+
+    if (value === "allProduct") {
+      if (checked) {
+        //Select all
+        const _ids = products.map((prd) => prd._id);
+        setToDelete(_ids);
+      } else {
+        //Deselect all
+        setToDelete([]);
+      }
+    } else {
+      if (checked) {
+        //Add Selected item
+
+        setToDelete((prev) => [...prev, value]);
+      } else {
+        //Remove deselected item
+        setToDelete((prev) => prev.filter((_id) => _id !== value));
+      }
+    }
+  };
+
+  console.log(toDelete);
   return (
     <div>
       <h2 className="text-center" style={{ color: "GrayText" }}>
@@ -87,7 +115,22 @@ export const ProductTable = ({ products, updateProductItem }) => {
           <thead>
             <tr>
               <th scope="col">_id</th>
+              <th>
+                {" "}
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value="allProduct"
+                  id="all-product"
+                  onChange={handleOnSelect}
+                  checked={
+                    toDelete.length === products.length && products.length > 0
+                  }
+                />{" "}
+                <label htmlFor="all-product"> Select All</label>
+              </th>
               <th scope="col">Item</th>
+
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -96,6 +139,16 @@ export const ProductTable = ({ products, updateProductItem }) => {
               return (
                 <tr key={i}>
                   <th scope="row">{prd._id}</th>
+                  <td>
+                    {" "}
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={prd?._id}
+                      onChange={handleOnSelect}
+                      checked={toDelete.includes(prd._id)}
+                    />{" "}
+                  </td>
                   <td>{prd.product}</td>
                   <td>
                     <button
